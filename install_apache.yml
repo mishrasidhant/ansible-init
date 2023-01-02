@@ -4,17 +4,35 @@
   become: true
   tasks:
 
-    - name: update repository cache
+    - name: update Ubuntu repo cache
       apt:
         update_cache: true
       when: ansible_distribution == "Ubuntu"
 
-    - name: install apache2 package
+    - name: install apache on Ubuntu
       apt:
         name: apache2
       when: ansible_distribution == "Ubuntu"
 
-    - name: add php support for apache
+    - name: add php support for apache on Ubuntu
       apt:
         name: libapache2-mod-php
       when: ansible_distribution == "Ubuntu"
+
+    - name: update Rhel repo cache
+      dnf:
+        update_cache: true
+      when: ansible_distribution == "RedHat"
+
+    - name: install Apache on Rhel
+      dnf:
+        name: httpd
+        state: latest
+      when: ansible_distribution == "RedHat"
+
+    - name: add php support for apache on Rhel
+      dnf:
+        name: php
+        state: latest
+      when: ansible_distribution == "RedHat"
+
